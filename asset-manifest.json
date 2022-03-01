@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Reset-Mode-d-emploi_front-end/static/css/main.e53aa69a.css",
+    "main.js": "/Reset-Mode-d-emploi_front-end/static/js/main.54719239.js",
+    "static/js/787.bc9a133f.chunk.js": "/Reset-Mode-d-emploi_front-end/static/js/787.bc9a133f.chunk.js",
+    "index.html": "/Reset-Mode-d-emploi_front-end/index.html",
+    "main.e53aa69a.css.map": "/Reset-Mode-d-emploi_front-end/static/css/main.e53aa69a.css.map",
+    "main.54719239.js.map": "/Reset-Mode-d-emploi_front-end/static/js/main.54719239.js.map",
+    "787.bc9a133f.chunk.js.map": "/Reset-Mode-d-emploi_front-end/static/js/787.bc9a133f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e53aa69a.css",
+    "static/js/main.54719239.js"
+  ]
+}
