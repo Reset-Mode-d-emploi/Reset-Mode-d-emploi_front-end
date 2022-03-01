@@ -46,7 +46,8 @@ const Map = function ({ date }: MapProps) {
 
   const { isLoading, error, data } = useQuery<DataPoint[], any>(
     'data.json',
-    () => fetch('data.json').then((res) => res.json())
+    () =>
+      fetch('Reset-Mode-d-emploi_front-end/data.json').then((res) => res.json())
   );
 
   if (data && data !== mapData) {

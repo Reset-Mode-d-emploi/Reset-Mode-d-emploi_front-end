@@ -2,6 +2,7 @@
   "name": "reset-mode-d-emploi",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://reset-mode-d-emploi.github.io/Reset-Mode-d-emploi_front-end/",
   "dependencies": {
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.7.1",
