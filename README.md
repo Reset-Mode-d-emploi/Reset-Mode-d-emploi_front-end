@@ -1,30 +1,24 @@
-# Front-end for Reset Mode d'emploi
+# Front-end for Reset Mode d'emploi - Deployment
 
 > Front-end of the project Reset Mode d'emploi 
 
-## Install
+# Building
 
-### Prerequisites
-
-If you have not already installed it, install [Node JS](https://nodejs.org/en/download/)
-
-### Project
+After building on the *master* branch, run the following commands.
 
 ```
-npm install
+rm -rf static
+rm -rf src/
+rm ./*.ico
+rm ./*.json
+rm ./*.html
+rm ./*.png
+rm ./*.txt
+mv build/* .
+rm -rf build/
 ```
 
-## Running
-
-```
-npm start
-```
-
-## Building
-
-```
-npm run build
-```
+In static/main.XXX.js and in static/main.XXX.js.map, replace `Reset-Mode-d-emploi_front-end/data.json` by `data.json`.
 
 ## License
 
