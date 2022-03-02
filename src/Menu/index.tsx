@@ -26,7 +26,7 @@ const Menu = function ({ menuOpen, setMenuOpen, date, setDate }: MenuProps) {
     <Dialog open={menuOpen} onClose={handleCloseMenu}>
       <DialogContent>
         <DialogContentText>
-          Choose the date to see the restaurant opening status.
+          Choose the date to see the bike repair location opening status.
         </DialogContentText>
         <DateTimePicker
           value={date}
