@@ -5,6 +5,14 @@ import { Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 // eslint-disable-next-line camelcase
 import opening_hours from 'opening_hours';
+import AccessibleIcon from '@mui/icons-material/Accessible';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import HomeIcon from '@mui/icons-material/Home';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LanguageIcon from '@mui/icons-material/Language';
+import styles from './index.module.css';
 import { DataPoint } from '../utils/types';
 import { getIcon } from '../utils/leafletIcons';
 
@@ -33,23 +41,33 @@ const Markers = function ({ data, date }: MarkersProps) {
           markerIcon = getIcon('orange');
         }
         popUpOpeningHours = (
-          <>
-            <p>{o.opening_hours as string}</p>
-            <p>
-              {`${nextState} on ${nextChangeDate?.toDateString()} - ${nextChangeDate?.toLocaleTimeString()} (in ${nextChangeHourDiffTime.toFixed(
-                0
-              )} hours)`}
-            </p>
-          </>
+          <p className={styles.row}>
+            <AccessTimeIcon />
+            {o.opening_hours as string}
+            <br />
+            {`${nextState} on ${nextChangeDate?.toDateString()} - ${nextChangeDate?.toLocaleTimeString()} (in ${nextChangeHourDiffTime.toFixed(
+              0
+            )} hours)`}
+          </p>
         );
       } catch {
         console.error(`Invalid opening hours for ${o.type} of id ${o.id}`);
         markerIcon = getIcon('grey');
-        popUpOpeningHours = <p>INVALID opening hours</p>;
+        popUpOpeningHours = (
+          <p className={styles.row}>
+            <AccessTimeIcon />
+            INVALID opening hours
+          </p>
+        );
       }
     } else {
       markerIcon = getIcon('grey');
-      popUpOpeningHours = <p>MISSING opening hours</p>;
+      popUpOpeningHours = (
+        <p className={styles.row}>
+          <AccessTimeIcon />
+          MISSING opening hours
+        </p>
+      );
     }
     return [markerIcon, popUpOpeningHours];
   }
@@ -58,11 +76,30 @@ const Markers = function ({ data, date }: MarkersProps) {
     return `https://www.openstreetmap.org/${o.type}/${o.id}`;
   }
 
+  function getWebsite(o: DataPoint): string {
+    return (
+      (o['Site Web'] as string) ||
+      (o['contact:website'] as string) ||
+      (o.website as string)
+    );
+  }
+
+  function getPhone(o: DataPoint): string {
+    return (o.phone as string) || (o['contact:phone'] as string);
+  }
+
+  function getEMail(o: DataPoint): string {
+    return (o.email as string) || (o['contact:email'] as string);
+  }
+
   const markers: JSX.Element[] = [];
   let id = 0;
   data?.forEach((e) => {
     const [markerIcon, popUpOpeningHours]: [L.Icon, JSX.Element] =
       getMarkerIconAndPopUpOpeningHours(e);
+    const website = getWebsite(e);
+    const phone = getPhone(e);
+    const email = getEMail(e);
     markers.push(
       <Marker
         position={[e.lat!, e.lon!]}
@@ -70,8 +107,58 @@ const Markers = function ({ data, date }: MarkersProps) {
         icon={markerIcon}
       >
         <Popup>
-          <p>{(e.name as string) || 'UNKNOWN NAME'}</p>
+          <p>{e.name || e.Sites || 'UNKNOWN NAME'}</p>
+          <p>{e.alt_name}</p>
+          <p>{e.description}</p>
           {popUpOpeningHours}
+          <p className={styles.row}>
+            <HomeIcon />
+            {e.Adresse ||
+              `${e['addr:housenumber'] ? e['addr:housenumber'] : ''} ${
+                e['addr:housename'] ? e['addr:housename'] : ''
+              } ${e['addr:street'] ? e['addr:street'] : ''} - ${
+                e['addr:postcode'] ? e['addr:postcode'] : ''
+              } ${e['addr:city'] ? e['addr:city'] : ''}`}
+          </p>
+          {website ? (
+            <p className={styles.row}>
+              <LanguageIcon />
+              <a href={website}>{website}</a>
+            </p>
+          ) : (
+            ''
+          )}
+          {phone ? (
+            <p className={styles.row}>
+              <PhoneIcon />
+              <a href={`tel:${phone}`}>{phone}</a>
+            </p>
+          ) : (
+            ''
+          )}
+          {email ? (
+            <p className={styles.row}>
+              <EmailIcon />
+              <a href={`mailto:${email}`}>{email}</a>
+            </p>
+          ) : (
+            ''
+          )}
+          {e['contact:facebook'] ? (
+            <a href={e['contact:facebook']}>
+              <FacebookIcon />
+            </a>
+          ) : (
+            ''
+          )}
+          {e.wheelchair ? (
+            <p className={styles.row}>
+              <AccessibleIcon />
+              {e.wheelchair}
+            </p>
+          ) : (
+            ''
+          )}
           <p>
             <a href={getOSMLink(e)}>See on OpenStreetMap</a> (to edit it for
             example)
