@@ -77,11 +77,14 @@ const Markers = function ({ data, date }: MarkersProps) {
   }
 
   function getWebsite(o: DataPoint): string {
-    return (
+    let website =
       (o['Site Web'] as string) ||
       (o['contact:website'] as string) ||
-      (o.website as string)
-    );
+      (o.website as string);
+    if (website && !website.startsWith('http')) {
+      website = `https://${website}`;
+    }
+    return website;
   }
 
   function getPhone(o: DataPoint): string {
