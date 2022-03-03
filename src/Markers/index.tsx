@@ -56,7 +56,7 @@ const Markers = function ({ data, date }: MarkersProps) {
         popUpOpeningHours = (
           <p className={styles.row}>
             <AccessTimeIcon />
-            INVALID opening hours
+            FAILED to parse opening hours : {o.opening_hours}
           </p>
         );
       }
