@@ -29,7 +29,11 @@ const Markers = function ({ data, date }: MarkersProps) {
     let popUpOpeningHours: JSX.Element;
     if (o.opening_hours) {
       try {
-        const oh = new opening_hours(o.opening_hours as string);
+        const oh = new opening_hours(o.opening_hours as string, {
+          lat: 45.2968119,
+          lon: 4.6604809,
+          address: { country_code: 'fr', state: 'Auvergne-Rhône-Alpes' },
+        });
         const isOpen = oh.getState(date || undefined);
         markerIcon = isOpen ? getIcon('green') : getIcon('red');
         const nextState = isOpen ? 'Closed' : 'Opened';
