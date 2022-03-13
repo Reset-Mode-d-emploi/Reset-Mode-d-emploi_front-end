@@ -4,6 +4,7 @@ import { LocalizationProvider } from '@mui/lab';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Map from './Map';
 import Menu from './Menu';
 import Guide from './Guide';
@@ -16,29 +17,40 @@ const App = function () {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-        <Guide />
-        <IconButton
-          aria-label="menu"
-          onClick={() => setMenuOpen(true)}
-          style={{
-            position: 'absolute',
-            zIndex: 10,
-            left: '2px',
-            top: '2px',
-            backgroundColor: 'white',
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <LocalizationProvider dateAdapter={DateAdapter}>
-          <Menu
-            menuOpen={menuOpen}
-            setMenuOpen={setMenuOpen}
-            date={date}
-            setDate={setDate}
-          />
-        </LocalizationProvider>
-        <Map date={date} />
+        <Router>
+          <Routes>
+            <Route path="/" element={<Guide />} />
+            <Route
+              path="map"
+              element={
+                <>
+                  <IconButton
+                    aria-label="menu"
+                    onClick={() => setMenuOpen(true)}
+                    style={{
+                      position: 'absolute',
+                      zIndex: 10,
+                      left: '2px',
+                      top: '2px',
+                      backgroundColor: 'white',
+                    }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <LocalizationProvider dateAdapter={DateAdapter}>
+                    <Menu
+                      menuOpen={menuOpen}
+                      setMenuOpen={setMenuOpen}
+                      date={date}
+                      setDate={setDate}
+                    />
+                  </LocalizationProvider>
+                  <Map date={date} />
+                </>
+              }
+            />
+          </Routes>
+        </Router>
       </QueryClientProvider>
     </div>
   );
