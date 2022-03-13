@@ -35,4 +35,17 @@ const dataExample = {
   id: 5961767982,
 };
 
+const guideExample = {
+  object: 'Vélo',
+  ref: 'bicycle',
+  part: 'Les roues',
+  issue: 'Problèmes de rayons',
+  tutorials: [
+    'https://www.spareka.fr/comment-reparer/electromenager/cafetiere-et-expresso',
+    'https://www.miss-pieces.com/diagnostic-aide-reparation-panne-machine-cafe-cafetiere__c41385.html',
+  ],
+};
+
 export type DataPoint = typeof dataExample;
+export type rawGuides = { values: string[][] };
+export type GuideData = typeof guideExample;

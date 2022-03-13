@@ -14,6 +14,13 @@ If you have not already installed it, install [Node JS](https://nodejs.org/en/do
 npm install
 ```
 
+Create a file `.env` with its content ```REACT_APP_GOOGLE_API_KEY=**HERE GOES YOUR GOOGLE API KEY**```
+
+If you don't have a Google API key, you need to create [here](https://console.cloud.google.com/apis/credentials).
+
+You need to enable Google Sheets API [here](https://console.cloud.google.com/apis/api/sheets.googleapis.com/overview).
+You should restrict your Google API Key to Google Sheets API.
+
 ## Running
 
 ```

@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Map from './Map';
 import Menu from './Menu';
+import Guide from './Guide';
 
 const queryClient = new QueryClient();
 const App = function () {
@@ -15,6 +16,7 @@ const App = function () {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
+        <Guide />
         <IconButton
           aria-label="menu"
           onClick={() => setMenuOpen(true)}
