@@ -1,13 +1,15 @@
 /* eslint-disable new-cap */
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import styles from './index.module.css';
 import { rawGuides, GuideData } from '../utils/types';
-import { convertGuides } from '../utils/guides';
+import { convertGuides, getNextLink, getNextStepTexts } from '../utils/guides';
 
 const Guide = function () {
+  const { object, part } = useParams();
   const [guideData, setGuideData] = useState<GuideData[] | null>(null);
   const { isLoading, error, data } = useQuery<rawGuides, any>('guides', () =>
     fetch(
@@ -20,27 +22,24 @@ const Guide = function () {
     setGuideData(convertGuides(data) || null);
   }
 
-  // TODO : Remove these placeholders :
-  const object = 'Vélo';
-  const ref = 'bicycle';
-  const part = 'Les roues';
-
-  const issues = guideData?.filter(
-    (guide) =>
-      guide.object === object && guide.ref === ref && guide.part === part
-  );
+  const buttonTexts = getNextStepTexts(guideData, object, part);
 
   return (
     <div className={styles.main}>
       {isLoading ? (
         <CircularProgress className={styles.progress} size="8em" />
       ) : null}
-      {!isLoading && !issues ? <p>ERROR : Case not managed</p> : null}
-      {!isLoading && issues ? (
+      {!isLoading && !buttonTexts ? <p>ERROR : Case not managed</p> : null}
+      {!isLoading && buttonTexts ? (
         <div className={styles.issues}>
-          {issues.map((issue) => (
-            <Button variant="contained" size="large" href="#/map">
-              {issue.issue}
+          {buttonTexts.map((text) => (
+            <Button
+              variant="contained"
+              size="large"
+              href={getNextLink(text, object, part)}
+              key={text}
+            >
+              {text}
             </Button>
           ))}
         </div>

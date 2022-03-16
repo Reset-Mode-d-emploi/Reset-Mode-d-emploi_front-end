@@ -20,6 +20,8 @@ const App = function () {
         <Router>
           <Routes>
             <Route path="/" element={<Guide />} />
+            <Route path="/guide/:object" element={<Guide />} />
+            <Route path="/guide/:object/:part" element={<Guide />} />
             <Route
               path="map"
               element={
