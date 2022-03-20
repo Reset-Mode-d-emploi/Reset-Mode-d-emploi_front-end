@@ -38,6 +38,7 @@ const Guide = function () {
               size="large"
               href={getNextLink(text, object, part)}
               key={text}
+              style={{ backgroundColor: 'white', color: 'black' }}
             >
               {text}
             </Button>
