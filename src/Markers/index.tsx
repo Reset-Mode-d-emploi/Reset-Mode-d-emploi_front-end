@@ -101,80 +101,82 @@ const Markers = function ({ data, date }: MarkersProps) {
 
   const markers: JSX.Element[] = [];
   let id = 0;
-  data?.forEach((e) => {
-    const [markerIcon, popUpOpeningHours]: [L.Icon, JSX.Element] =
-      getMarkerIconAndPopUpOpeningHours(e);
-    const website = getWebsite(e);
-    const phone = getPhone(e);
-    const email = getEMail(e);
-    markers.push(
-      <Marker
-        position={[e.lat!, e.lon!]}
-        key={`marker-${id}`}
-        icon={markerIcon}
-      >
-        <Popup>
-          <p>{e.name || e.Sites || 'UNKNOWN NAME'}</p>
-          <p>{e.alt_name}</p>
-          <p>{e.description}</p>
-          {popUpOpeningHours}
-          <p className={styles.row}>
-            <HomeIcon />
-            {e.Adresse ||
-              `${e['addr:housenumber'] ? e['addr:housenumber'] : ''} ${
-                e['addr:housename'] ? e['addr:housename'] : ''
-              } ${e['addr:street'] ? e['addr:street'] : ''} - ${
-                e['addr:postcode'] ? e['addr:postcode'] : ''
-              } ${e['addr:city'] ? e['addr:city'] : ''}`}
-          </p>
-          {website ? (
+  data
+    ?.filter((e) => e.lat && e.lon)
+    .forEach((e) => {
+      const [markerIcon, popUpOpeningHours]: [L.Icon, JSX.Element] =
+        getMarkerIconAndPopUpOpeningHours(e);
+      const website = getWebsite(e);
+      const phone = getPhone(e);
+      const email = getEMail(e);
+      markers.push(
+        <Marker
+          position={[e.lat, e.lon]}
+          key={`marker-${id}`}
+          icon={markerIcon}
+        >
+          <Popup>
+            <p>{e.name || e.Sites || 'UNKNOWN NAME'}</p>
+            <p>{e.alt_name}</p>
+            <p>{e.description}</p>
+            {popUpOpeningHours}
             <p className={styles.row}>
-              <LanguageIcon />
-              <a href={website}>{website}</a>
+              <HomeIcon />
+              {e.Adresse ||
+                `${e['addr:housenumber'] ? e['addr:housenumber'] : ''} ${
+                  e['addr:housename'] ? e['addr:housename'] : ''
+                } ${e['addr:street'] ? e['addr:street'] : ''} - ${
+                  e['addr:postcode'] ? e['addr:postcode'] : ''
+                } ${e['addr:city'] ? e['addr:city'] : ''}`}
             </p>
-          ) : (
-            ''
-          )}
-          {phone ? (
-            <p className={styles.row}>
-              <PhoneIcon />
-              <a href={`tel:${phone}`}>{phone}</a>
+            {website ? (
+              <p className={styles.row}>
+                <LanguageIcon />
+                <a href={website}>{website}</a>
+              </p>
+            ) : (
+              ''
+            )}
+            {phone ? (
+              <p className={styles.row}>
+                <PhoneIcon />
+                <a href={`tel:${phone}`}>{phone}</a>
+              </p>
+            ) : (
+              ''
+            )}
+            {email ? (
+              <p className={styles.row}>
+                <EmailIcon />
+                <a href={`mailto:${email}`}>{email}</a>
+              </p>
+            ) : (
+              ''
+            )}
+            {e['contact:facebook'] ? (
+              <a href={e['contact:facebook']}>
+                <FacebookIcon />
+              </a>
+            ) : (
+              ''
+            )}
+            {e.wheelchair ? (
+              <p className={styles.row}>
+                <AccessibleIcon />
+                {e.wheelchair}
+              </p>
+            ) : (
+              ''
+            )}
+            <p>
+              <a href={getOSMLink(e)}>See on OpenStreetMap</a> (to edit it for
+              example)
             </p>
-          ) : (
-            ''
-          )}
-          {email ? (
-            <p className={styles.row}>
-              <EmailIcon />
-              <a href={`mailto:${email}`}>{email}</a>
-            </p>
-          ) : (
-            ''
-          )}
-          {e['contact:facebook'] ? (
-            <a href={e['contact:facebook']}>
-              <FacebookIcon />
-            </a>
-          ) : (
-            ''
-          )}
-          {e.wheelchair ? (
-            <p className={styles.row}>
-              <AccessibleIcon />
-              {e.wheelchair}
-            </p>
-          ) : (
-            ''
-          )}
-          <p>
-            <a href={getOSMLink(e)}>See on OpenStreetMap</a> (to edit it for
-            example)
-          </p>
-        </Popup>
-      </Marker>
-    );
-    id += 1;
-  });
+          </Popup>
+        </Marker>
+      );
+      id += 1;
+    });
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{markers}</>;
 };

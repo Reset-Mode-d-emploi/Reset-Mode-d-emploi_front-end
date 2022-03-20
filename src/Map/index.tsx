@@ -2,12 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
 import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { DataPoint } from '../utils/types';
+import {
+  rawGSheetData,
+  convertData,
+  convertDataPoint,
+  DataPoint,
+} from '../utils/types';
 import Markers from '../Markers';
 import * as cts from '../utils/constants';
 import styles from './index.module.css';
@@ -18,7 +24,8 @@ type MapProps = {
 };
 
 const Map = function ({ date }: MapProps) {
-  const [mapData, setMapData] = useState<DataPoint[] | null>(null);
+  const { ref } = useParams();
+  const [mapData, setMapData] = useState<rawGSheetData | null>(null);
   const [map, setMap] = useState<L.Map | null>(null);
   const { location, locationError } = useCurrentLocation({
     timeout: 1000 * 60,
@@ -44,10 +51,10 @@ const Map = function ({ date }: MapProps) {
     }
   }, [locationError]);
 
-  const { isLoading, error, data } = useQuery<DataPoint[], any>(
-    'data.json',
-    () =>
-      fetch('Reset-Mode-d-emploi_front-end/data.json').then((res) => res.json())
+  const { isLoading, error, data } = useQuery<rawGSheetData, any>('map', () =>
+    fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/17seANKbX3tFKlfO1fqlMpA1PIISM_GUKItTcvcpCoXw/values/data?key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+    ).then((res) => res.json())
   );
 
   if (data && data !== mapData) {
@@ -56,7 +63,13 @@ const Map = function ({ date }: MapProps) {
 
   if (error) return <div>An error has occurred: {error.message}</div>;
 
-  // TODO Avoid calling overpass when clicking on a marker near the border
+  function getRefData() {
+    if (!mapData) return mapData;
+    const dataPoints = convertData(mapData, convertDataPoint) as DataPoint[];
+    return dataPoints.filter(
+      (e) => e.repair_oneself === ref || e.repair_pro === ref
+    );
+  }
 
   return (
     <>
@@ -72,7 +85,7 @@ const Map = function ({ date }: MapProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Markers data={mapData} date={date} />
+        <Markers data={getRefData()} date={date} />
       </MapContainer>
       {isLoading ? (
         <CircularProgress className={styles.progress} size="8em" />

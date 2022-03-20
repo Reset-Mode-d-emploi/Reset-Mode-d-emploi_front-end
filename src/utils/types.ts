@@ -47,5 +47,46 @@ const guideExample = {
 };
 
 export type DataPoint = typeof dataExample;
-export type rawGuides = { values: string[][] };
 export type GuideData = typeof guideExample;
+export type rawGSheetData = { values: string[][] };
+
+// eslint-disable-next-line import/prefer-default-export
+export function convertData(
+  data: rawGSheetData | undefined | null,
+  convertDatum: any
+) {
+  if (!data) return data;
+  // The first value is in fact the header of the dataset
+  return data.values
+    .slice(1)
+    .map((datum: string[]) => convertDatum(datum, data.values[0] as any));
+}
+
+// eslint-disable-next-line import/prefer-default-export
+export function convertDataPoint(
+  dataPoint: string[],
+  columns: (keyof DataPoint)[]
+) {
+  const res: Partial<DataPoint> = {};
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < columns.length; i++) {
+    const col = columns[i];
+    res[col] = dataPoint[i] as any;
+  }
+  return res;
+}
+
+// eslint-disable-next-line import/prefer-default-export
+export function convertGuide(rawGuide: string[], columns: (keyof GuideData)[]) {
+  const res: Partial<GuideData> = {};
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < columns.length; i++) {
+    const col = columns[i];
+    if (col === 'tutorials') {
+      res.tutorials = rawGuide[i] ? rawGuide[i].split(';') : [''];
+    } else {
+      res[col] = rawGuide[i];
+    }
+  }
+  return res;
+}
