@@ -1,7 +1,8 @@
 /* eslint-disable new-cap */
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import styles from './index.module.css';
@@ -33,6 +34,8 @@ const Guide = function () {
 
   const ref = getRef(guideData, object);
 
+  const navigate = useNavigate();
+
   return (
     <div className={styles.main}>
       {isLoading ? (
@@ -40,19 +43,35 @@ const Guide = function () {
       ) : null}
       {!isLoading && !buttonTexts ? <p>ERROR : Case not managed</p> : null}
       {!isLoading && buttonTexts ? (
-        <div className={styles.issues}>
-          {buttonTexts.map((text) => (
+        <>
+          <div className={styles.header}>
             <Button
               variant="contained"
               size="large"
-              href={getNextLink(text!, object, part, ref)}
-              key={text}
-              style={{ backgroundColor: 'white', color: 'black' }}
-            >
-              {text}
-            </Button>
-          ))}
-        </div>
+              onClick={() => navigate(-1)}
+              startIcon={<ArrowBackIcon />}
+              style={{ backgroundColor: '#d4ee04', color: 'white' }}
+            />
+            <img
+              className={styles.headerLogo}
+              src="Reset-Mode-d-emploi_front-end/logo_img.jpg"
+              alt="Logo Reset"
+            />
+          </div>
+          <div className={styles.issues}>
+            {buttonTexts.map((text) => (
+              <Button
+                variant="contained"
+                size="large"
+                href={getNextLink(text!, object, part, ref)}
+                key={text}
+                style={{ backgroundColor: 'white', color: 'black' }}
+              >
+                {text}
+              </Button>
+            ))}
+          </div>
+        </>
       ) : null}
     </div>
   );
