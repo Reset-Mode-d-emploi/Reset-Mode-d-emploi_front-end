@@ -8,6 +8,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Map from './Map';
 import Menu from './Menu';
 import Guide from './Guide';
+import Intro from './Intro';
 
 const queryClient = new QueryClient();
 const App = function () {
@@ -19,7 +20,8 @@ const App = function () {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Routes>
-            <Route path="/" element={<Guide />} />
+            <Route path="/" element={<Intro />} />
+            <Route path="/guide" element={<Guide />} />
             <Route path="/guide/:object" element={<Guide />} />
             <Route path="/guide/:object/:part" element={<Guide />} />
             <Route

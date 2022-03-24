@@ -1,0 +1,71 @@
+.main {
+  font-size: 1.4em;
+}
+
+.header {
+  background-color: #1b8d73;
+  height: 12vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLogo {
+  height: 11vh;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.15em;
+  color: #1b8d73;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1em;
+}
+
+.boldCenter {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 0;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.secondPart {
+  height: 25vh;
+}
+
+.thirdPart {
+  background-color: #d4ee04;
+  height: 25vh;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.thirdPartText {
+  margin-top: 0;
+  padding: 1em;
+}
+
+.forthPart {
+  background-color: #1b8d73;
+  height: 38vh;
+}
+
+.forthPartText {
+  font-weight: bold;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1em;
+}
