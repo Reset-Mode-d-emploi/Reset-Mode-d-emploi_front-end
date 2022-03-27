@@ -28,3 +28,10 @@
   top: 30%;
   z-index: 100;
 }
+
+.question {
+  font-weight: bold;
+  font-size: 1.15em;
+  color: white;
+  text-align: center;
+}

@@ -1,23 +1,53 @@
+import {
+  GIVE_OPTION,
+  GIVE_OR_REPAIR_QUESTION,
+  ISSUE_QUESTION,
+  OBJECT_QUESTION,
+  PART_QUESTION,
+  REPAIR_OPTION,
+} from './constants';
 import { GuideData } from './types';
+
+export function getQuestion(
+  object: string | undefined,
+  giveOrRepair: string | undefined,
+  part: string | undefined
+) {
+  if (!object) {
+    return OBJECT_QUESTION;
+  }
+  if (!giveOrRepair) {
+    return GIVE_OR_REPAIR_QUESTION;
+  }
+  if (!part) {
+    return PART_QUESTION;
+  }
+  return ISSUE_QUESTION;
+}
 
 export function getNextLink(
   nextStepText: string,
   object: string | undefined,
+  giveOrRepair: string | undefined,
   part: string | undefined,
   ref: string | undefined
 ) {
   if (!object) {
     return `#/guide/${nextStepText}`;
   }
-  if (!part) {
+  if (!giveOrRepair) {
     return `#/guide/${object}/${nextStepText}`;
   }
-  return `#/map/${ref}`;
+  if (!part) {
+    return `#/guide/${object}/${giveOrRepair}/${nextStepText}`;
+  }
+  return `#/map/${giveOrRepair}/${ref}`;
 }
 
 export function getNextStepTexts(
   guideData: Partial<GuideData>[] | null,
   object: string | undefined,
+  giveOrRepair: string | undefined,
   part: string | undefined
 ) {
   if (!object) {
@@ -28,6 +58,9 @@ export function getNextStepTexts(
         })
       )
     );
+  }
+  if (!giveOrRepair) {
+    return [GIVE_OPTION, REPAIR_OPTION];
   }
   if (!part) {
     return Array.from(

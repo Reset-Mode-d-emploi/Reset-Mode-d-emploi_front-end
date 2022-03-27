@@ -23,9 +23,13 @@ const App = function () {
             <Route path="/" element={<Intro />} />
             <Route path="/guide" element={<Guide />} />
             <Route path="/guide/:object" element={<Guide />} />
-            <Route path="/guide/:object/:part" element={<Guide />} />
+            <Route path="/guide/:object/:giveOrRepair" element={<Guide />} />
             <Route
-              path="map/:ref"
+              path="/guide/:object/:giveOrRepair/:part"
+              element={<Guide />}
+            />
+            <Route
+              path="map/:giveOrRepair/:ref"
               element={
                 <>
                   <IconButton

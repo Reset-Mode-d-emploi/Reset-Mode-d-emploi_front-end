@@ -18,13 +18,14 @@ import Markers from '../Markers';
 import * as cts from '../utils/constants';
 import styles from './index.module.css';
 import useCurrentLocation from '../utils/geolocalisation';
+import { REPAIR_OPTION } from '../utils/constants';
 
 type MapProps = {
   date: Date | null;
 };
 
 const Map = function ({ date }: MapProps) {
-  const { ref } = useParams();
+  const { ref, giveOrRepair } = useParams();
   const [mapData, setMapData] = useState<rawGSheetData | null>(null);
   const [map, setMap] = useState<L.Map | null>(null);
   const { location, locationError } = useCurrentLocation({
@@ -66,8 +67,10 @@ const Map = function ({ date }: MapProps) {
   function getRefData() {
     if (!mapData) return mapData;
     const dataPoints = convertData(mapData, convertDataPoint) as DataPoint[];
-    return dataPoints.filter(
-      (e) => e.repair_oneself === ref || e.repair_pro === ref
+    return dataPoints.filter((e) =>
+      giveOrRepair === REPAIR_OPTION
+        ? e.repair_oneself === ref || e.repair_pro === ref
+        : e.sell === ref || e.give === ref
     );
   }
 

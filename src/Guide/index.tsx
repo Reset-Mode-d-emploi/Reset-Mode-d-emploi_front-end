@@ -12,10 +12,15 @@ import {
   convertData,
   convertGuide,
 } from '../utils/types';
-import { getNextLink, getNextStepTexts, getRef } from '../utils/guides';
+import {
+  getNextLink,
+  getNextStepTexts,
+  getQuestion,
+  getRef,
+} from '../utils/guides';
 
 const Guide = function () {
-  const { object, part } = useParams();
+  const { object, giveOrRepair, part } = useParams();
   const [guideData, setGuideData] = useState<Partial<GuideData>[] | null>(null);
   const { isLoading, error, data } = useQuery<rawGSheetData, any>(
     'guides',
@@ -30,7 +35,7 @@ const Guide = function () {
     setGuideData(convertData(data, convertGuide) || null);
   }
 
-  const buttonTexts = getNextStepTexts(guideData, object, part);
+  const buttonTexts = getNextStepTexts(guideData, object, giveOrRepair, part);
 
   const ref = getRef(guideData, object);
 
@@ -58,12 +63,15 @@ const Guide = function () {
               alt="Logo Reset"
             />
           </div>
+          <p className={styles.question}>
+            {getQuestion(object, giveOrRepair, part)}
+          </p>
           <div className={styles.issues}>
             {buttonTexts.map((text) => (
               <Button
                 variant="contained"
                 size="large"
-                href={getNextLink(text!, object, part, ref)}
+                href={getNextLink(text!, object, giveOrRepair, part, ref)}
                 key={text}
                 style={{ backgroundColor: 'white', color: 'black' }}
               >
