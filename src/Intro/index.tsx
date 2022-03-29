@@ -33,7 +33,7 @@ const Intro = function () {
           <br />
           c&apos;est quoi ?
         </p>
-        <p className={styles.boldCenter}>
+        <p className={styles.subtitle}>
           Vous avez un objet ...
           <br />A réparer ? A donner ?
         </p>

@@ -1,5 +1,5 @@
 .main {
-  font-size: 1.4em;
+  font-size: 3vh;
 }
 
 .header {
@@ -17,16 +17,16 @@
 
 .title {
   font-weight: bold;
-  font-size: 1.15em;
   color: #1b8d73;
   text-align: center;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 1em;
+  padding: 1.8vh;
 }
 
-.boldCenter {
+.subtitle {
   font-weight: bold;
+  font-size: 2.5vh;
   text-align: center;
   margin-top: 0;
 }
@@ -46,7 +46,7 @@
 
 .thirdPart {
   background-color: #d4ee04;
-  height: 25vh;
+  height: 20vh;
   text-align: center;
   margin-top: 0;
   margin-bottom: 0;
@@ -54,12 +54,12 @@
 
 .thirdPartText {
   margin-top: 0;
-  padding: 1em;
+  padding: 1.8vh;
 }
 
 .forthPart {
   background-color: #1b8d73;
-  height: 38vh;
+  height: 43vh;
 }
 
 .forthPartText {
@@ -67,5 +67,5 @@
   color: white;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 1em;
+  padding: 1.8vh;
 }
