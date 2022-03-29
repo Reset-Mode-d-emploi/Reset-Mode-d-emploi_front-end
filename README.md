@@ -27,6 +27,10 @@ You should restrict your Google API Key to Google Sheets API.
 npm start
 ```
 
+You can connect a smartphone on the same network of you computer to the website.
+- Get the ip of your computer (`ipconfig` on windows, `ifconfig` on Linux and Mac),
+- On your smartphone, connect to http://<ip>:3000/Reset-Mode-d-emploi_front-end.
+
 ## Building
 
 ```
@@ -49,3 +53,4 @@ The project has an [Apache-2.0 License](LICENSE).
 - [Use geolocalisation API with React Hooks](https://github.com/NorbertB29/geolocation-api-hook/blob/master/src/hooks/useCurrentLocation.js)
 - [Publish website on GitHub pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
 - [Build React projects for a custom relative webpage](https://create-react-app.dev/docs/deployment#building-for-relative-paths)
+- [Run a React project on smartphone](https://stackoverflow.com/a/45760470)
