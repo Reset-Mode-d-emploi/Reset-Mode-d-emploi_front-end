@@ -8,5 +8,6 @@ export const OBJECT_QUESTION = 'Quel est mon objet ?';
 export const GIVE_OR_REPAIR_QUESTION = 'Je veux... ?';
 export const PART_QUESTION = "D'où vient le problème ?";
 export const ISSUE_QUESTION = 'Précisez votre problème';
+export const ADVICE_TITLE = 'Voici nos conseils :';
 export const GIVE_OPTION = 'Donner mon objet';
 export const REPAIR_OPTION = 'Réparer mon objet';

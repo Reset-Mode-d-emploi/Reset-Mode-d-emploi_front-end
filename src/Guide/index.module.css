@@ -14,7 +14,7 @@
   height: 95%;
 }
 
-.issues {
+.content {
   height: 93vh;
   display: flex;
   flex-direction: column;
@@ -34,4 +34,22 @@
   font-size: 1.15em;
   color: white;
   text-align: center;
+}
+
+.video {
+  height: 30vh;
+  width: 90vw;
+}
+
+.goToProfessional {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+}
+
+.goToProfessionalText {
+  color: white;
+  font-size: 3vh;
 }

@@ -29,6 +29,10 @@ const App = function () {
               element={<Guide />}
             />
             <Route
+              path="/guide/:object/:giveOrRepair/:part/:issue"
+              element={<Guide />}
+            />
+            <Route
               path="map/:giveOrRepair/:ref"
               element={
                 <>

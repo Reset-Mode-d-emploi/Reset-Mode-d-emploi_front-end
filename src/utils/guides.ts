@@ -25,26 +25,37 @@ export function getQuestion(
   return ISSUE_QUESTION;
 }
 
+export function getRef(
+  guideData: Partial<GuideData>[] | null,
+  object: string | undefined
+) {
+  if (!object) {
+    console.error('No object');
+    return '';
+  }
+  return guideData?.filter((guide) => guide.object === object)[0].ref;
+}
+
 export function getNextLink(
   nextStepText: string,
   object: string | undefined,
   giveOrRepair: string | undefined,
   part: string | undefined,
-  ref: string | undefined
+  guideData: Partial<GuideData>[] | null
 ) {
   if (!object) {
     return `#/guide/${nextStepText}`;
   }
   if (!giveOrRepair) {
     if (nextStepText === GIVE_OPTION) {
-      return `#/map/${GIVE_OPTION}/${ref}`;
+      return `#/map/${GIVE_OPTION}/${getRef(guideData, object)}`;
     }
     return `#/guide/${object}/${nextStepText}`;
   }
   if (!part) {
     return `#/guide/${object}/${giveOrRepair}/${nextStepText}`;
   }
-  return `#/map/${giveOrRepair}/${ref}`;
+  return `#/guide/${object}/${giveOrRepair}/${part}/${nextStepText}`;
 }
 
 export function getNextStepTexts(
@@ -87,13 +98,17 @@ export function getNextStepTexts(
   );
 }
 
-export function getRef(
+export function getTutorials(
   guideData: Partial<GuideData>[] | null,
-  object: string | undefined
+  object: string | undefined,
+  part: string | undefined,
+  issue: string | undefined
 ) {
-  if (!object) {
-    console.error('No object');
-    return '';
+  if (!object || !part || !issue) {
+    return null;
   }
-  return guideData?.filter((guide) => guide.object === object)[0].ref;
+  return guideData?.filter(
+    (guide) =>
+      guide.object === object && guide.part === part && guide.issue === issue
+  )[0].tutorials;
 }
