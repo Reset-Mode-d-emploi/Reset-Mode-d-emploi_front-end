@@ -36,6 +36,9 @@ export function getNextLink(
     return `#/guide/${nextStepText}`;
   }
   if (!giveOrRepair) {
+    if (nextStepText === GIVE_OPTION) {
+      return `#/map/${GIVE_OPTION}/${ref}`;
+    }
     return `#/guide/${object}/${nextStepText}`;
   }
   if (!part) {
