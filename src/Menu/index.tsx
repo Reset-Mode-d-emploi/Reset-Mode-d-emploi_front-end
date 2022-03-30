@@ -7,6 +7,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import frLocale from 'date-fns/locale/fr';
 
 type MenuProps = {
   menuOpen: boolean;
@@ -24,20 +27,22 @@ const Menu = function ({ menuOpen, setMenuOpen, date, setDate }: MenuProps) {
 
   return (
     <Dialog open={menuOpen} onClose={handleCloseMenu}>
-      <DialogContent>
-        <DialogContentText>
-          Choose the date to see the bike repair location opening status.
-        </DialogContentText>
-        <DateTimePicker
-          value={date}
-          onChange={setDate}
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          renderInput={(params) => <TextField {...params} fullWidth />}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCloseMenu}>Close</Button>
-      </DialogActions>
+      <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+        <DialogContent>
+          <DialogContentText>
+            Choisir une date pour voir le status d&apos;ouverture des lieux.
+          </DialogContentText>
+          <DateTimePicker
+            value={date}
+            onChange={setDate}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            renderInput={(params) => <TextField {...params} fullWidth />}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseMenu}>Close</Button>
+        </DialogActions>
+      </LocalizationProvider>
     </Dialog>
   );
 };

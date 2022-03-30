@@ -36,7 +36,7 @@ const Markers = function ({ data, date }: MarkersProps) {
         });
         const isOpen = oh.getState(date || undefined);
         markerIcon = isOpen ? getIcon('green') : getIcon('red');
-        const nextState = isOpen ? 'Closed' : 'Opened';
+        const nextState = isOpen ? 'Fermera' : 'Ouvrira';
         const nextChangeDate = oh.getNextChange(date || undefined);
         const nextChangeHourDiffTime = nextChangeDate
           ? (nextChangeDate.getTime() - Date.now()) / 1000 / 3600
@@ -49,9 +49,9 @@ const Markers = function ({ data, date }: MarkersProps) {
             <AccessTimeIcon />
             {o.opening_hours as string}
             <br />
-            {`${nextState} on ${nextChangeDate?.toDateString()} - ${nextChangeDate?.toLocaleTimeString()} (in ${nextChangeHourDiffTime.toFixed(
+            {`${nextState} à ${nextChangeDate?.toLocaleTimeString()} le ${nextChangeDate?.toLocaleDateString()} (${nextChangeHourDiffTime.toFixed(
               0
-            )} hours)`}
+            )} heures après la date saisie dans le menu)`}
           </p>
         );
       } catch {
@@ -69,7 +69,7 @@ const Markers = function ({ data, date }: MarkersProps) {
       popUpOpeningHours = (
         <p className={styles.row}>
           <AccessTimeIcon />
-          MISSING opening hours
+          Horaires d&apos;ouverture MANQUANT
         </p>
       );
     }
@@ -78,6 +78,19 @@ const Markers = function ({ data, date }: MarkersProps) {
 
   function getOSMLink(o: DataPoint): string {
     return `https://www.openstreetmap.org/${o.type}/${o.id}`;
+  }
+
+  function getWheelchairInFrench(wheelchair: string): string {
+    if (wheelchair === 'yes') {
+      return 'oui';
+    }
+    if (wheelchair === 'no') {
+      return 'non';
+    }
+    if (wheelchair === 'limited') {
+      return 'limité';
+    }
+    return wheelchair;
   }
 
   function getWebsite(o: DataPoint): string {
@@ -163,14 +176,14 @@ const Markers = function ({ data, date }: MarkersProps) {
             {e.wheelchair ? (
               <p className={styles.row}>
                 <AccessibleIcon />
-                {e.wheelchair}
+                {getWheelchairInFrench(e.wheelchair)}
               </p>
             ) : (
               ''
             )}
             <p>
-              <a href={getOSMLink(e)}>See on OpenStreetMap</a> (to edit it for
-              example)
+              <a href={getOSMLink(e)}>Voir sur OpenStreetMap</a> (pour modifier
+              par exemple)
             </p>
           </Popup>
         </Marker>
