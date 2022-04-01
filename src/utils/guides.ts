@@ -36,6 +36,18 @@ export function getRef(
   return guideData?.filter((guide) => guide.object === object)[0].ref;
 }
 
+function hasTutorials(guideData: Partial<GuideData>[] | null, object: string) {
+  if (!guideData) {
+    return false;
+  }
+  return (
+    guideData?.filter(
+      (guide) =>
+        guide.object === object && guide.tutorials && guide.tutorials[0] !== ''
+    ).length > 0
+  );
+}
+
 export function getNextLink(
   nextStepText: string,
   object: string | undefined,
@@ -44,7 +56,10 @@ export function getNextLink(
   guideData: Partial<GuideData>[] | null
 ) {
   if (!object) {
-    return `#/guide/${nextStepText}`;
+    if (hasTutorials(guideData, nextStepText)) {
+      return `#/guide/${nextStepText}`;
+    }
+    return `#/map/${GIVE_OPTION}/${getRef(guideData, nextStepText)}`;
   }
   if (!giveOrRepair) {
     if (nextStepText === GIVE_OPTION) {
