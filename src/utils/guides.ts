@@ -113,17 +113,38 @@ export function getNextStepTexts(
   );
 }
 
+function hasIssues(
+  guideData: Partial<GuideData>[] | null,
+  object: string,
+  part: string
+) {
+  if (!guideData) {
+    return false;
+  }
+  return (
+    guideData?.filter(
+      (guide) =>
+        guide.object === object &&
+        guide.part === part &&
+        guide.issue &&
+        guide.issue !== ''
+    ).length > 0
+  );
+}
+
 export function getTutorials(
   guideData: Partial<GuideData>[] | null,
   object: string | undefined,
   part: string | undefined,
   issue: string | undefined
 ) {
-  if (!object || !part || !issue) {
+  if (!object || !part || (!issue && hasIssues(guideData, object, part))) {
     return null;
   }
   return guideData?.filter(
     (guide) =>
-      guide.object === object && guide.part === part && guide.issue === issue
+      guide.object === object &&
+      guide.part === part &&
+      (guide.issue === issue || guide.issue === '')
   )[0].tutorials;
 }
