@@ -59,6 +59,12 @@ const Guide = function () {
               startIcon={<ArrowBackIcon />}
               style={{ backgroundColor: '#d4ee04', color: 'white' }}
             />
+            <p className={styles.headerText}>
+              {giveOrRepair ? `${giveOrRepair.split(' ')[0]} - ` : ''}{' '}
+              {object || ''}
+              {part ? ` - ${part}` : ''}
+              {issue ? ` - ${issue}` : ''}
+            </p>
             <img
               className={styles.headerLogo}
               src="Reset-Mode-d-emploi_front-end/logo_img.jpg"

@@ -10,6 +10,13 @@
   height: 7vh;
 }
 
+.headerText {
+  color: white;
+  margin-top: -0.3vh;
+  margin-left: 2vw;
+  font-size: 2.5vh;
+}
+
 .headerLogo {
   height: 95%;
 }
@@ -31,7 +38,7 @@
 
 .question {
   font-weight: bold;
-  font-size: 1.15em;
+  font-size: 2.5vh;
   color: white;
   text-align: center;
 }
