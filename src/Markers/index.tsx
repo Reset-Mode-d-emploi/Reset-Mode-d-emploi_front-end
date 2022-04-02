@@ -117,6 +117,7 @@ const Markers = function ({ data, date }: MarkersProps) {
   data
     ?.filter((e) => e.lat && e.lon)
     .forEach((e) => {
+      console.log(parseInt(String(e['addr:postcode']), 10));
       const [markerIcon, popUpOpeningHours]: [L.Icon, JSX.Element] =
         getMarkerIconAndPopUpOpeningHours(e);
       const website = getWebsite(e);
@@ -139,7 +140,9 @@ const Markers = function ({ data, date }: MarkersProps) {
                 `${e['addr:housenumber'] ? e['addr:housenumber'] : ''} ${
                   e['addr:housename'] ? e['addr:housename'] : ''
                 } ${e['addr:street'] ? e['addr:street'] : ''} - ${
-                  e['addr:postcode'] ? e['addr:postcode'] : ''
+                  e['addr:postcode']
+                    ? parseInt(String(e['addr:postcode']), 10)
+                    : ''
                 } ${e['addr:city'] ? e['addr:city'] : ''}`}
             </p>
             {website ? (
