@@ -3,6 +3,7 @@ import DateAdapter from '@mui/lab/AdapterDateFns';
 import { LocalizationProvider } from '@mui/lab';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import AddIcon from '@mui/icons-material/Add';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Map from './Map';
@@ -48,6 +49,19 @@ const App = function () {
                     }}
                   >
                     <MenuIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="menu"
+                    href="https://framaforms.org/reset-mode-demploi-ajout-de-lieux-1648893304"
+                    style={{
+                      position: 'absolute',
+                      zIndex: 10,
+                      left: '2px',
+                      top: '15vh',
+                      backgroundColor: 'white',
+                    }}
+                  >
+                    <AddIcon />
                   </IconButton>
                   <LocalizationProvider dateAdapter={DateAdapter}>
                     <Menu
