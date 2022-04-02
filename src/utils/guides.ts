@@ -59,11 +59,14 @@ export function getNextLink(
     if (hasTutorials(guideData, nextStepText)) {
       return `#/guide/${nextStepText}`;
     }
-    return `#/map/${GIVE_OPTION}/${getRef(guideData, nextStepText)}`;
+    return `#/map/${GIVE_OPTION}/${nextStepText}/${getRef(
+      guideData,
+      nextStepText
+    )}`;
   }
   if (!giveOrRepair) {
     if (nextStepText === GIVE_OPTION) {
-      return `#/map/${GIVE_OPTION}/${getRef(guideData, object)}`;
+      return `#/map/${GIVE_OPTION}/${object}/${getRef(guideData, object)}`;
     }
     return `#/guide/${object}/${nextStepText}`;
   }

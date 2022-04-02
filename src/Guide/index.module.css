@@ -2,25 +2,6 @@
   background-color: #1b8d73;
 }
 
-.header {
-  background-color: #d4ee04;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 7vh;
-}
-
-.headerText {
-  color: white;
-  margin-top: -0.3vh;
-  margin-left: 2vw;
-  font-size: 2.5vh;
-}
-
-.headerLogo {
-  height: 95%;
-}
-
 .content {
   height: 93vh;
   display: flex;

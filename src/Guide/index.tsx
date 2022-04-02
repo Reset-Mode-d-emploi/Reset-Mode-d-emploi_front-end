@@ -1,8 +1,7 @@
 /* eslint-disable new-cap */
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import styles from './index.module.css';
@@ -20,6 +19,7 @@ import {
   getRef,
   getTutorials,
 } from '../utils/guides';
+import Header from '../Header';
 
 const Guide = function () {
   const { object, giveOrRepair, part, issue } = useParams();
@@ -41,8 +41,6 @@ const Guide = function () {
 
   const tutorials = getTutorials(guideData, object, part, issue);
 
-  const navigate = useNavigate();
-
   return (
     <div className={styles.main}>
       {isLoading ? (
@@ -51,26 +49,12 @@ const Guide = function () {
       {!isLoading && !buttonTexts ? <p>ERROR : Case not managed</p> : null}
       {!isLoading && buttonTexts ? (
         <>
-          <div className={styles.header}>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => navigate(-1)}
-              startIcon={<ArrowBackIcon />}
-              style={{ backgroundColor: '#d4ee04', color: 'white' }}
-            />
-            <p className={styles.headerText}>
-              {giveOrRepair ? `${giveOrRepair.split(' ')[0]} - ` : ''}{' '}
-              {object || ''}
-              {part ? ` - ${part}` : ''}
-              {issue ? ` - ${issue}` : ''}
-            </p>
-            <img
-              className={styles.headerLogo}
-              src="Reset-Mode-d-emploi_front-end/logo_img.jpg"
-              alt="Logo Reset"
-            />
-          </div>
+          <Header
+            object={object}
+            giveOrRepair={giveOrRepair}
+            part={part}
+            issue={issue}
+          />
           <div className={styles.content}>
             {tutorials ? (
               <>
@@ -88,7 +72,10 @@ const Guide = function () {
                   <Button
                     variant="contained"
                     size="large"
-                    href={`#/map/${giveOrRepair}/${getRef(guideData, object)}`}
+                    href={`#/map/${giveOrRepair}/${object}/${getRef(
+                      guideData,
+                      object
+                    )}`}
                     style={{
                       backgroundColor: 'white',
                       color: 'black',

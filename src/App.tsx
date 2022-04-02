@@ -33,7 +33,7 @@ const App = function () {
               element={<Guide />}
             />
             <Route
-              path="map/:giveOrRepair/:ref"
+              path="map/:giveOrRepair/:object/:ref"
               element={
                 <>
                   <IconButton
@@ -43,7 +43,7 @@ const App = function () {
                       position: 'absolute',
                       zIndex: 10,
                       left: '2px',
-                      top: '2px',
+                      top: '8vh',
                       backgroundColor: 'white',
                     }}
                   >

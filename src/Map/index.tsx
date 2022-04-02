@@ -19,13 +19,14 @@ import * as cts from '../utils/constants';
 import styles from './index.module.css';
 import useCurrentLocation from '../utils/geolocalisation';
 import { REPAIR_OPTION } from '../utils/constants';
+import Header from '../Header';
 
 type MapProps = {
   date: Date | null;
 };
 
 const Map = function ({ date }: MapProps) {
-  const { ref, giveOrRepair } = useParams();
+  const { giveOrRepair, object, ref } = useParams();
   const [mapData, setMapData] = useState<rawGSheetData | null>(null);
   const [map, setMap] = useState<L.Map | null>(null);
   const { location, locationError } = useCurrentLocation({
@@ -75,13 +76,19 @@ const Map = function ({ date }: MapProps) {
   }
 
   return (
-    <>
+    <div>
+      <Header
+        object={object}
+        giveOrRepair={giveOrRepair}
+        part={undefined}
+        issue={undefined}
+      />
       <MapContainer
         className={styles.main}
         center={[45.1876448, 5.7050641]}
         zoom={18}
         zoomControl={false}
-        style={{ height: '100vh' }}
+        style={{ height: '93vh' }}
         whenCreated={setMap}
       >
         <TileLayer
@@ -102,7 +109,7 @@ const Map = function ({ date }: MapProps) {
           Failed to get geolocation : {locationError}
         </Alert>
       </Snackbar>
-    </>
+    </div>
   );
 };
 
