@@ -4,6 +4,7 @@ import { LocalizationProvider } from '@mui/lab';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from '@mui/icons-material/Info';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Map from './Map';
@@ -15,6 +16,11 @@ const queryClient = new QueryClient();
 const App = function () {
   const [menuOpen, setMenuOpen] = React.useState(true);
   const [date, setDate] = useState<Date | null>(new Date(Date.now()));
+
+  const buttonStyle = {
+    backgroundColor: 'white',
+    marginBottom: '0.5vh',
+  };
 
   return (
     <div className="App">
@@ -37,32 +43,39 @@ const App = function () {
               path="map/:giveOrRepair/:object/:ref"
               element={
                 <>
-                  <IconButton
-                    aria-label="menu"
-                    onClick={() => setMenuOpen(true)}
+                  <div
                     style={{
                       position: 'absolute',
                       zIndex: 10,
                       left: '2px',
                       top: '8vh',
-                      backgroundColor: 'white',
+                      display: 'flex',
+                      flexDirection: 'column',
                     }}
                   >
-                    <MenuIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="menu"
-                    href="https://framaforms.org/reset-mode-demploi-ajout-de-lieux-1648893304"
-                    style={{
-                      position: 'absolute',
-                      zIndex: 10,
-                      left: '2px',
-                      top: '15vh',
-                      backgroundColor: 'white',
-                    }}
-                  >
-                    <AddIcon />
-                  </IconButton>
+                    <IconButton
+                      aria-label="menu"
+                      onClick={() => setMenuOpen(true)}
+                      style={buttonStyle}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="menu"
+                      href="https://framaforms.org/reset-mode-demploi-ajout-de-lieux-1648893304"
+                      style={buttonStyle}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                    {/* TODO Ouvrir un Dialog avec plus d'ingos (Civic Lab, GitHub) */}
+                    <IconButton
+                      aria-label="menu"
+                      href="https://framaforms.org/reset-mode-demploi-retour-libre-1648895495"
+                      style={buttonStyle}
+                    >
+                      <InfoIcon />
+                    </IconButton>
+                  </div>
                   <LocalizationProvider dateAdapter={DateAdapter}>
                     <Menu
                       menuOpen={menuOpen}

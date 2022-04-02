@@ -117,7 +117,6 @@ const Markers = function ({ data, date }: MarkersProps) {
   data
     ?.filter((e) => e.lat && e.lon)
     .forEach((e) => {
-      console.log(parseInt(String(e['addr:postcode']), 10));
       const [markerIcon, popUpOpeningHours]: [L.Icon, JSX.Element] =
         getMarkerIconAndPopUpOpeningHours(e);
       const website = getWebsite(e);
