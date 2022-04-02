@@ -41,6 +41,25 @@ const Guide = function () {
 
   const tutorials = getTutorials(guideData, object, part, issue);
 
+  function tutorialUrlToHtml(url: string) {
+    if (url.includes('youtube')) {
+      return (
+        <iframe className={styles.video} title={url} src={url} key={url} />
+      );
+    }
+    const imgSrc = url.includes('spareka')
+      ? 'Reset-Mode-d-emploi_front-end/spareka.png'
+      : 'Reset-Mode-d-emploi_front-end/miss_pieces.png';
+    const imgAlt = url.includes('spareka')
+      ? 'Spareka logo'
+      : 'Miss Pieces .com logo';
+    return (
+      <a href={url} key={url}>
+        <img src={imgSrc} alt={imgAlt} />
+      </a>
+    );
+  }
+
   return (
     <div className={styles.main}>
       {isLoading ? (
@@ -59,14 +78,7 @@ const Guide = function () {
             {tutorials ? (
               <>
                 <p className={styles.question}>{ADVICE_TITLE}</p>
-                {tutorials.map((url) => (
-                  <iframe
-                    className={styles.video}
-                    title={url}
-                    src={url}
-                    key={url}
-                  />
-                ))}
+                {tutorials.map((url) => tutorialUrlToHtml(url))}
                 <div className={styles.goToProfessional}>
                   <p className={styles.goToProfessionalText}>Je préfère ...</p>
                   <Button
