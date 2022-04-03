@@ -16,7 +16,7 @@ import Intro from './Intro';
 const queryClient = new QueryClient();
 const App = function () {
   const [menuOpen, setMenuOpen] = React.useState(true);
-  const [aboutOpen, setAboutOpen] = React.useState(true);
+  const [aboutOpen, setAboutOpen] = React.useState(false);
   const [date, setDate] = useState<Date | null>(new Date(Date.now()));
   const [repairOneSelf, setRepairOneSelf] = useState<boolean>(true);
   const [repairPro, setRepairPro] = useState<boolean>(true);
