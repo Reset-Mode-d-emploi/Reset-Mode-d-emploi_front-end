@@ -6,8 +6,11 @@ export const LOCATION_STATUS_TIME = TOAST_DISPLAY_TIME;
 // Hard coded texts
 export const OBJECT_QUESTION = 'Quel est mon objet ?';
 export const GIVE_OR_REPAIR_QUESTION = 'Je veux... ?';
+export const GUARANTEE_QUESTION = 'Est-il :';
 export const PART_QUESTION = "D'où vient le problème ?";
 export const ISSUE_QUESTION = 'Précisez votre problème';
 export const ADVICE_TITLE = 'Voici nos conseils :';
 export const GIVE_OPTION = 'Donner mon objet';
 export const REPAIR_OPTION = 'Réparer mon objet';
+export const GUARANTEE_OPTION = 'Encore sous garantie';
+export const NOT_GUARANTEE_OPTION = 'Plus sous garantie';

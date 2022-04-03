@@ -32,11 +32,15 @@ const App = function () {
             <Route path="/guide/:object" element={<Guide />} />
             <Route path="/guide/:object/:giveOrRepair" element={<Guide />} />
             <Route
-              path="/guide/:object/:giveOrRepair/:part"
+              path="/guide/:object/:giveOrRepair/:guarantee"
               element={<Guide />}
             />
             <Route
-              path="/guide/:object/:giveOrRepair/:part/:issue"
+              path="/guide/:object/:giveOrRepair/:guarantee/:part"
+              element={<Guide />}
+            />
+            <Route
+              path="/guide/:object/:giveOrRepair/:guarantee/:part/:issue"
               element={<Guide />}
             />
             <Route

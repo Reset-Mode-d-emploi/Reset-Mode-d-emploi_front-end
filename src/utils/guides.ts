@@ -1,7 +1,10 @@
 import {
   GIVE_OPTION,
   GIVE_OR_REPAIR_QUESTION,
+  GUARANTEE_OPTION,
+  GUARANTEE_QUESTION,
   ISSUE_QUESTION,
+  NOT_GUARANTEE_OPTION,
   OBJECT_QUESTION,
   PART_QUESTION,
   REPAIR_OPTION,
@@ -11,6 +14,7 @@ import { GuideData } from './types';
 export function getQuestion(
   object: string | undefined,
   giveOrRepair: string | undefined,
+  guarantee: string | undefined,
   part: string | undefined
 ) {
   if (!object) {
@@ -18,6 +22,9 @@ export function getQuestion(
   }
   if (!giveOrRepair) {
     return GIVE_OR_REPAIR_QUESTION;
+  }
+  if (!guarantee) {
+    return GUARANTEE_QUESTION;
   }
   if (!part) {
     return PART_QUESTION;
@@ -52,6 +59,7 @@ export function getNextLink(
   nextStepText: string,
   object: string | undefined,
   giveOrRepair: string | undefined,
+  guarantee: string | undefined,
   part: string | undefined,
   guideData: Partial<GuideData>[] | null
 ) {
@@ -70,16 +78,20 @@ export function getNextLink(
     }
     return `#/guide/${object}/${nextStepText}`;
   }
-  if (!part) {
+  if (!guarantee) {
     return `#/guide/${object}/${giveOrRepair}/${nextStepText}`;
   }
-  return `#/guide/${object}/${giveOrRepair}/${part}/${nextStepText}`;
+  if (!part) {
+    return `#/guide/${object}/${giveOrRepair}/${guarantee}/${nextStepText}`;
+  }
+  return `#/guide/${object}/${giveOrRepair}/${guarantee}/${part}/${nextStepText}`;
 }
 
 export function getNextStepTexts(
   guideData: Partial<GuideData>[] | null,
   object: string | undefined,
   giveOrRepair: string | undefined,
+  guarantee: string | undefined,
   part: string | undefined
 ) {
   if (!object) {
@@ -93,6 +105,9 @@ export function getNextStepTexts(
   }
   if (!giveOrRepair) {
     return [GIVE_OPTION, REPAIR_OPTION];
+  }
+  if (!guarantee) {
+    return [GUARANTEE_OPTION, NOT_GUARANTEE_OPTION];
   }
   if (!part) {
     return Array.from(

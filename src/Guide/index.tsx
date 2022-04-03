@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import styles from './index.module.css';
-import { ADVICE_TITLE } from '../utils/constants';
+import { ADVICE_TITLE, GUARANTEE_OPTION } from '../utils/constants';
 import {
   rawGSheetData,
   GuideData,
@@ -22,7 +22,7 @@ import {
 import Header from '../Header';
 
 const Guide = function () {
-  const { object, giveOrRepair, part, issue } = useParams();
+  const { object, giveOrRepair, guarantee, part, issue } = useParams();
   const [guideData, setGuideData] = useState<Partial<GuideData>[] | null>(null);
   const { isLoading, error, data } = useQuery<rawGSheetData, any>(
     'guides',
@@ -37,7 +37,13 @@ const Guide = function () {
     setGuideData(convertData(data, convertGuide) || null);
   }
 
-  const buttonTexts = getNextStepTexts(guideData, object, giveOrRepair, part);
+  const buttonTexts = getNextStepTexts(
+    guideData,
+    object,
+    giveOrRepair,
+    guarantee,
+    part
+  );
 
   const tutorials = getTutorials(guideData, object, part, issue);
 
@@ -101,27 +107,42 @@ const Guide = function () {
                 </div>
               </>
             ) : (
+              // eslint-disable-next-line react/jsx-no-useless-fragment
               <>
-                <p className={styles.question}>
-                  {getQuestion(object, giveOrRepair, part)}
-                </p>
-                {buttonTexts.map((text) => (
-                  <Button
-                    variant="contained"
-                    size="large"
-                    href={getNextLink(
-                      text!,
-                      object,
-                      giveOrRepair,
-                      part,
-                      guideData
-                    )}
-                    key={text}
-                    style={{ backgroundColor: 'white', color: 'black' }}
-                  >
-                    {text}
-                  </Button>
-                ))}
+                {guarantee === GUARANTEE_OPTION ? (
+                  <p className={styles.question}>
+                    Votre objet est encore sous garantie, n&apos;essayez pas de
+                    le réparer par vous même car vous la perdrez.
+                    <br />
+                    <br />
+                    Contactez le fabricant ou le revendeur pour qu&apos;il vous
+                    explique la marche à suivre.
+                  </p>
+                ) : (
+                  <>
+                    <p className={styles.question}>
+                      {getQuestion(object, giveOrRepair, guarantee, part)}
+                    </p>
+                    {buttonTexts.map((text) => (
+                      <Button
+                        variant="contained"
+                        size="large"
+                        href={getNextLink(
+                          text!,
+                          object,
+                          giveOrRepair,
+                          guarantee,
+                          part,
+                          guideData
+                        )}
+                        key={text}
+                        style={{ backgroundColor: 'white', color: 'black' }}
+                      >
+                        {text}
+                      </Button>
+                    ))}
+                  </>
+                )}
               </>
             )}
           </div>
