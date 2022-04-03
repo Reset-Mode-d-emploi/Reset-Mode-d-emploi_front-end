@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import InfoIcon from '@mui/icons-material/Info';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import About from './About';
 import Map from './Map';
 import Menu from './Menu';
 import Guide from './Guide';
@@ -15,6 +16,7 @@ import Intro from './Intro';
 const queryClient = new QueryClient();
 const App = function () {
   const [menuOpen, setMenuOpen] = React.useState(true);
+  const [aboutOpen, setAboutOpen] = React.useState(true);
   const [date, setDate] = useState<Date | null>(new Date(Date.now()));
 
   const buttonStyle = {
@@ -71,10 +73,9 @@ const App = function () {
                     >
                       <AddIcon />
                     </IconButton>
-                    {/* TODO Ouvrir un Dialog avec plus d'ingos (Civic Lab, GitHub) */}
                     <IconButton
                       aria-label="menu"
-                      href="https://framaforms.org/reset-mode-demploi-retour-libre-1648895495"
+                      onClick={() => setAboutOpen(true)}
                       style={buttonStyle}
                     >
                       <InfoIcon />
@@ -87,6 +88,7 @@ const App = function () {
                       date={date}
                       setDate={setDate}
                     />
+                    <About aboutOpen={aboutOpen} setAboutOpen={setAboutOpen} />
                   </LocalizationProvider>
                   <Map date={date} />
                 </>

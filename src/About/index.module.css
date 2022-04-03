@@ -1,0 +1,14 @@
+.main {
+  background-color: #1b8d73;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text {
+  color: white;
+}
+
+.image {
+  width: 10vh;
+}
