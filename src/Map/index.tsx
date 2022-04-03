@@ -23,9 +23,24 @@ import Header from '../Header';
 
 type MapProps = {
   date: Date | null;
+  repairOneSelf: boolean;
+  repairPro: boolean;
+  sell: boolean;
+  give: boolean;
+  repair: boolean;
+  // eslint-disable-next-line no-unused-vars
+  setRepair: (give: boolean) => void;
 };
 
-const Map = function ({ date }: MapProps) {
+const Map = function ({
+  date,
+  repairOneSelf,
+  repairPro,
+  sell,
+  give,
+  repair,
+  setRepair,
+}: MapProps) {
   const { giveOrRepair, object, ref } = useParams();
   const [mapData, setMapData] = useState<rawGSheetData | null>(null);
   const [map, setMap] = useState<L.Map | null>(null);
@@ -53,6 +68,17 @@ const Map = function ({ date }: MapProps) {
     }
   }, [locationError]);
 
+  /**
+   * Set the repair status for the menu
+   */
+  useEffect(() => {
+    if (
+      (repair && giveOrRepair !== REPAIR_OPTION) ||
+      (!repair && giveOrRepair === REPAIR_OPTION)
+    )
+      setRepair(giveOrRepair === REPAIR_OPTION);
+  }, [giveOrRepair]);
+
   const { isLoading, error, data } = useQuery<rawGSheetData, any>('map', () =>
     fetch(
       `https://sheets.googleapis.com/v4/spreadsheets/17seANKbX3tFKlfO1fqlMpA1PIISM_GUKItTcvcpCoXw/values/data?key=${process.env.REACT_APP_GOOGLE_API_KEY}`
@@ -70,8 +96,9 @@ const Map = function ({ date }: MapProps) {
     const dataPoints = convertData(mapData, convertDataPoint) as DataPoint[];
     return dataPoints.filter((e) =>
       giveOrRepair === REPAIR_OPTION
-        ? e.repair_oneself === ref || e.repair_pro === ref
-        : e.sell === ref || e.give === ref
+        ? (repairOneSelf && e.repair_oneself === ref) ||
+          (repairPro && e.repair_pro === ref)
+        : (sell && e.sell === ref) || (give && e.give === ref)
     );
   }
 

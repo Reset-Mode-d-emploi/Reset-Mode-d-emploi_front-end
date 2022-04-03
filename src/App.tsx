@@ -18,6 +18,11 @@ const App = function () {
   const [menuOpen, setMenuOpen] = React.useState(true);
   const [aboutOpen, setAboutOpen] = React.useState(true);
   const [date, setDate] = useState<Date | null>(new Date(Date.now()));
+  const [repairOneSelf, setRepairOneSelf] = useState<boolean>(true);
+  const [repairPro, setRepairPro] = useState<boolean>(true);
+  const [sell, setSell] = useState<boolean>(true);
+  const [give, setGive] = useState<boolean>(true);
+  const [repair, setRepair] = useState<boolean>(true);
 
   const buttonStyle = {
     backgroundColor: 'white',
@@ -87,10 +92,27 @@ const App = function () {
                       setMenuOpen={setMenuOpen}
                       date={date}
                       setDate={setDate}
+                      repairOneSelf={repairOneSelf}
+                      setRepairOneSelf={setRepairOneSelf}
+                      repairPro={repairPro}
+                      setRepairPro={setRepairPro}
+                      sell={sell}
+                      setSell={setSell}
+                      give={give}
+                      setGive={setGive}
+                      repair={repair}
                     />
                     <About aboutOpen={aboutOpen} setAboutOpen={setAboutOpen} />
                   </LocalizationProvider>
-                  <Map date={date} />
+                  <Map
+                    date={date}
+                    repairOneSelf={repairOneSelf}
+                    repairPro={repairPro}
+                    sell={sell}
+                    give={give}
+                    repair={repair}
+                    setRepair={setRepair}
+                  />
                 </>
               }
             />
